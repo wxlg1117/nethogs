@@ -20,6 +20,11 @@ Nethogs is a mature piece of software included in most Linux distributions.
 
 Ideas for features, as well as [open bugs](https://github.com/raboof/nethogs/issues?q=is%3Aopen+is%3Aissue), can be found on  [issues' label:enhancement](https://github.com/raboof/nethogs/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement).
 
+### Downloading
+
+You can clone this repo or get a source release from
+https://github.com/raboof/nethogs/releases
+
 ### Building from source
 
 Nethogs depends on `ncurses` for the text-based interface and `libpcap` for user-level packet capture. So you need to install both **development libraries** before building nethogs. 
@@ -40,16 +45,24 @@ The master branch is intended to be stable at all times:
 
 #### Building
 
-After that, simply 
+After that, simply
 
     make
-    sudo ./nethogs
+    sudo ./src/nethogs
 
 #### Installing
+
+##### For all distributions
 
     sudo make install
     hash -r
     sudo nethogs
+    
+##### On Debian
+
+    sudo apt-get install checkinstall
+    sudo checkinstall -D make install
+    sudo dpkg -i nethogs*.deb
 
 #### Upgrading
 
@@ -61,6 +74,12 @@ the old one.
 If you want to remove Nethogs from your system, you can:
 
     sudo make uninstall
+
+### Running without root
+
+In order to be run by a non-root user, nethogs needs the `cap_net_admin` and `cap_net_raw` capabilities. These can be set on the executable by using the `setcap` command, as follows:
+
+    sudo setcap "cap_net_admin,cap_net_raw+pe" /usr/local/sbin/nethogs
 
 Coding standards
 ----------------
@@ -103,6 +122,7 @@ Nethogs monitors traffic going to/from a machine, per process. Other tools rathe
 * [iftop](http://ex-parrot.com/~pdw/iftop/) shows network traffic by service and host
 * [ifstat](http://gael.roualland.free.fr/ifstat/) shows network traffic by interface in a vmstat/iostat-like manner
 * [gnethogs](https://github.com/mbfoss/gnethogs) GTK-based GUI (work-in-progress)
+* [nethogs-qt](http://slist.lilotux.net/linux/nethogs-qt/index_en.html) Qt-based GUI
 * [hogwatch](https://github.com/akshayKMR/hogwatch) A bandwidth monitor(per process) with graphs for desktop/web.
  
 License
